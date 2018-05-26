@@ -27,7 +27,11 @@ login y demas roles.
 - Se utilizo Guice para realizar la inyeccion, esto facilita que sea el mismo gestor quien determine que necesita para crear cada objeto y garantizar su iniacion sin fallos.
 - La base de datos es gestionada con un sistema PostgreSQL, que al estar enfocada en objetos-relacional facilita la integracion con Java.
 
-### Link Heroku: https://sistemamonitoriaaakaa.herokuapp.com/ 
+### Link Heroku: https://sistemamonitores.herokuapp.com
+
+[![CircleCI](https://circleci.com/gh/SergioRt1/SistemaMonitores.svg?style=svg)](https://circleci.com/gh/SergioRt1/SistemaMonitores)
+
+
 
 
  
