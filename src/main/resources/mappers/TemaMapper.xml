@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.TemaMapper">
+    <select parameterType="map" id="consultarTemaGeneral" resultMap="TemaResult">
+        select 
+    
+            materia.materia_id,
+            materia.materia_nombre as m_nombre,
+            materia.materia_nemonico as m_nemonico,
+            materia.creditos as m_creditos,
+            materia.horas_monitoria_curso as m_horas_monitoria_curso,
+
+            tema.temaid,
+            tema.topic as tm_topic,
+            tema.descripcion as tm_descripcion
+    
+        FROM Tema join Materia on(tema.Tema_temaID=tema.temaId)
+        <where>
+            <if test="temaId != null">
+                tema.temaId=#{temaId}
+            </if>
+            <if test="matID != null">
+                tema.materia_materia_id=#{matID}
+            </if>
+        </where>
+        
+    </select>
+    
+    <update id="actualizarTema" >
+        UPDATE tema SET 
+        topic = #{tema},
+        descripcion = #{desc}
+	WHERE temaid = #{temID}
+    </update>
+    
+    <insert id="insertarTema" parameterType="map" useGeneratedKeys="true" keyProperty="temaId">
+        INSERT INTO tema (topic, descripcion, materia_materia_id)
+        VALUES(#{tema}, #{desc}, #{matID})
+    </insert>
+    
+    <delete id="deleteTema">
+        DELETE FROM tema WHERE temaid = #{temID}
+    </delete>
+    
+    <insert parameterType="map" id="registroTemaMonitoria">
+        INSERT INTO temamonitoria (asesoriaestudiante_asesoria_monitor_asesoriaid,asesoriaestudiante_estudiante_carnet,tema_temaid)
+        VALUES (#{asID},#{carnet},#{temaID})
+        ON CONFLICT DO NOTHING
+    </insert>
+
+    <resultMap type='Tema' id='TemaResult'>
+        <id property='temaId' column="temaid"></id>
+        <result property='topic' column="tm_topic"></result>
+        <result property='descripcion' column="tm_Descripcion"></result>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,24 @@
+<<<<<<< 6e7a7e556f54b1c1d8df950ede961211f3ce7023
+/target/
+nbactions.xml
+nb-configuration.xml
+.idea
+*.iml
+*.log
+Primefaces-Netbeans-GuessANumber.*
+.~*
+target
+.directory
+=======
+.~*
+*.iml
+idea
+.idea
+/target/
+nbactions.xml
+nb-configuration.xml
+.idea
+*.log
+.DS_Store
+>>>>>>> Adicion filtro consulta GUI
+/nbproject/

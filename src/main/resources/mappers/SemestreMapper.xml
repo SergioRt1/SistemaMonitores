@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.SemestreMapper">
+    
+    <resultMap type="Semestre" id="SemestreResult" >
+        <id property="semestreID" column="semestre_id"/>
+        <result property="anno" column="se_year"/>
+        <result property="periodoAcademico" column="se_periodo_academico"/>
+        <result property="fechaInicio" column="se_fechainicio"/>
+        <result property="fechaFin" column="se_fechafin"/>
+    </resultMap>
+    
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ProfesorMapper">
+    
+    <select parameterType="map" id="consultaProfesorGeneral" resultMap="ProfesorResult">
+        select 
+            profesorGrupo.profesorid as pr_profesorid,
+            profesorGrupo.nombres as pr_nombres,
+            profesorGrupo.apellidos as pr_apellidos,
+            profesorGrupo.correo as pr_correo,
+            profesorGrupo.telefono as pr_telefono
+        
+            from profesor as profesorGrupo
+        <if test="proID != null">
+            where profesorGrupo.profesorid = #{proID}
+        </if>
+    </select>
+    
+    <update id="actualizarProfesor" >
+        UPDATE profesor SET
+	nombres = #{nom},
+        apellidos = #{apell}, 
+        correo = #{mail},
+        telefono = #{tel}
+	WHERE profesorid = #{id}
+    </update>
+    
+    <insert parameterType="map" id="agregarProfesor">
+        INSERT INTO profesor (profesorid, nombres, apellidos, correo, telefono)
+        VALUES (#{codID},#{nom},#{apell},#{mail},#{tel})
+    </insert>
+    
+    <delete id="deleteProfesor">
+        DELETE FROM profesor WHERE profesorid = #{id}
+    </delete>
+    
+    <resultMap type="Profesor" id="ProfesorResult" >
+        <id property="codigoID" column="pr_profesorid"/>
+        <result property="nombre" column="pr_nombres"/>
+        <result property="apellido" column="pr_apellidos"/>
+        <result property="correo" column="pr_correo"/>
+        <result property="telefono" column="pr_telefono"/>
+    </resultMap>
+    
+    <resultMap type="Profesor" id="ProfesorEstudianteResult" >
+        <id property="codigoID" column="pre_profesorid"/>
+        <result property="nombre" column="pre_nombres"/>
+        <result property="apellido" column="pre_apellidos"/>
+        <result property="correo" column="pre_correo"/>
+        <result property="telefono" column="pre_telefono"/>
+    </resultMap>
+    
+</mapper>

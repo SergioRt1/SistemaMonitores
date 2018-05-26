@@ -1,0 +1,127 @@
+<ui:composition template="./../Templeates/plantillaAdministrador.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="form">
+            <div id="cent" style="margin-right: 13%">
+                <div id="progreso" >
+                    <center>
+                        <p:steps activeIndex="1" styleClass="custom" readonly="false" >
+                            <p:menuitem value="Registro materia" url="/faces/Views/registrarMateria.xhtml"/>
+                            <p:menuitem value="Registro de Temas" url="/faces/Views/registrarTemas.xhtml"/>
+                        </p:steps>
+                    </center>
+                </div>
+                <center>
+                    <p:panel style="width: 500px">
+                        <h:outputText style="font-size: 18px;color: #4c9ad2;" value="Registrar Temas"/>
+                        <p:messages id="messages"/>
+                        <h:panelGrid columns="3" cellpadding="5" id="grid">
+
+                            <h:outputLabel for="nombre" value="Nombre mnemotecnico materia: " />
+                            <p:inputText id="nombre" label="Nombre mnemotecnico" required="true" value="#{registrarMateria.nemotecnicoTema}"/>
+                            <p:message for="nombre" display="icon"/>
+
+                            <h:outputLabel for="topic" value="Tema: " />
+                            <p:inputText id="topic" label="Tema " required="true" value="#{registrarMateria.tema}"/>
+                            <p:message for="topic" display="icon"/>
+
+                            <h:outputLabel for="descripcion" value="Descripcion: "/>
+                            <p:inputText id="descripcion" label="Descripcion" required="true" value="#{registrarMateria.descripcionTema}"/> 
+                            <p:message for="descripcion" display="icon"/>
+
+                        </h:panelGrid>
+
+                        <p:commandButton value="Limpiar" update="grid :form:messages" process="@this" actionListener="#{registrarMateria.limpiarTema()}">
+                            <p:resetInput target="grid"/>
+                        </p:commandButton> 
+                        <p:commandButton value="Registrar" update="grid :form:messages" actionListener="#{registrarMateria.registrarTema()}" action="/faces/Views/registrarTemas.xhtml">
+                            <p:resetInput target="grid"/>
+                        </p:commandButton>
+                    </p:panel>
+                </center>
+            </div>
+            <p:separator style="visibility: hidden;margin-top: 0.5%"/>
+            <p:growl id="msgs" showDetail="true"/>
+            <p:messages id="messagesTable" for="messagesTable"/>
+            <p:dataTable id="monotor" var="mat" value="#{registrarMateria.materias}" editable="true" editMode="cell" selection="#{registrarMateria.materiaActual}" rowKey="#{mat.materiaID}" selectionMode="single">
+                <p:ajax event="rowSelect" listener="#{registrarMateria.onRowSelect}" update=":form:EditarTemas" oncomplete="PF('asesoriaDialog').show()" />
+                <f:facet name="header">
+                    Monitores Registrados
+                </f:facet>
+
+                <p:ajax event="cellEdit" listener="#{registrarMateria.onCellEdit}" update=":form:msgs" />
+
+                <p:column headerText="Nombre mnemotecnico" filterBy="#{mat.memoico}" sortBy="#{mon.memoico}" filterMatchMode="startsWith">
+                    <h:outputText value="#{mat.memoico}" />
+                </p:column>
+
+                <p:column headerText="Nombre completo" filterBy="#{mat.nombre}" sortBy="#{mat.nombre}" filterMatchMode="startsWith">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mat.nombre}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mat.nombre}" style="width:96%" label="Nombre"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Creditos" filterBy="#{mat.creditos}" sortBy="#{mon.creditos}" filterMatchMode="startsWith">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mat.creditos}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mat.creditos}" style="width:96%" label="Creditos"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Horas" filterBy="#{mat.horas}" sortBy="#{mat.horas}" filterMatchMode="startsWith">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{mat.horas}" /></f:facet>
+                        <f:facet name="input"><p:inputText value="#{mat.horas}" style="width:96%" label="Correo"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column style="width:32px">
+                    <p:commandButton icon="ui-icon-circle-close" immediate="true" actionListener="#{registrarMateria.delete(mat.memoico)}" update=":form:monotor :form:messagesTable"/>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:dialog header="Temas" id="dialogDetalle" widgetVar="asesoriaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="margin-right: 2%;padding-bottom: 20px;padding-left: 10px;padding-right: 10px;">
+                <p:messages id="messagesTableTema" for="messagesTableTema"/>
+                <p:outputPanel id="EditarTemas">
+                    <p:dataTable id="tema" var="tem" value="#{registrarMateria.materiaActual.temas}" editable="true" editMode="cell">
+                        <f:facet name="header">
+                            <h:outputText value="Temas #{registrarMateria.materiaActual.memoico}"/>
+                        </f:facet>
+
+                        <p:ajax event="cellEdit" listener="#{registrarMateria.onCellEditTema}" update=":form:msgs" />
+
+                        <p:column headerText="Tema" filterBy="#{tem.topic}" sortBy="#{tem.topic}" filterMatchMode="startsWith">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tem.topic}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tem.topic}" style="width:96%" label="Creditos"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Descripcion" filterBy="#{tem.descripcion}" sortBy="#{tem.descripcion}" filterMatchMode="startsWith">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tem.descripcion}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{tem.descripcion}" style="width:96%" label="Nombre"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:32px">
+                            <p:commandButton icon="ui-icon-circle-close" immediate="true" actionListener="#{registrarMateria.deleteTema(tem.temaId)}" update=":form:monotor :form:messagesTableTema"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+            </p:dialog>
+
+            <p:separator style="visibility: hidden;margin-top: 0.2%"/>
+            <p:commandButton value="Actualizar" icon="ui-icon-star" update=":form" actionListener="#{registrarMateria.consultar()}" style="margin-left: 10px" immediate="true">
+                <p:resetInput target=":form"/>
+            </p:commandButton>
+        </h:form>
+    </ui:define>
+</ui:composition>

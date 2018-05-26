@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.eci.pdsw.sampleprj.dao.mybatis.mappers.EstudianteMapper">
+    <select parameterType="map" id="consultarEstudianteGeneral" resultMap="EstudianteResult">
+        select    
+        es.carnet,
+        es.nombre AS es_nombre
+        FROM estudiante as es 
+
+        <if test="carnet != null">
+            WHERE es.carnet = #{carnet}
+        </if>
+    </select>
+    
+    <insert parameterType="map" id="agregarEstudiante">
+        INSERT INTO estudiante (carnet,nombre,profesorestudianteid)
+        VALUES (#{carnet},#{nombre},#{proID})
+    </insert>
+    
+    <resultMap type="Estudiante" id="EstudianteResult" >
+        <id property="carnet" column="carnet"/>
+        <result property="nombre" column="es_nombre"/>
+        <association property="profesor" javaType="Profesor" resultMap='edu.eci.pdsw.sampleprj.dao.mybatis.mappers.ProfesorMapper.ProfesorEstudianteResult'/>
+    </resultMap>
+    
+</mapper>
