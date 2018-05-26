@@ -29,6 +29,7 @@ login y demas roles.
 
 ### Link Heroku: https://sistemamonitores.herokuapp.com
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/19b424cce5fb4ec8ad4d930babd98f8a)](https://app.codacy.com/app/SergioRt1/SistemaMonitores?utm_source=github.com&utm_medium=referral&utm_content=SergioRt1/SistemaMonitores&utm_campaign=badger)
 [![CircleCI](https://circleci.com/gh/SergioRt1/SistemaMonitores.svg?style=svg)](https://circleci.com/gh/SergioRt1/SistemaMonitores)
 
 
