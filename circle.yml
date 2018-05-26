@@ -5,5 +5,5 @@ machine:
 deployment:
   staging:
     branch: master
-    heroku: 
-      appname: sistemamonitoriaaakaa
+    heroku:
+      appname: sistemamonitores
